@@ -1,5 +1,6 @@
-const http = require("http"); // import Http
+## Understanding Request
 
+```js
 const server = http.createServer((req, res) => {
   console.log(req.url, req.method, req.headers);
   // process.exit(); // Just use CTRL + C
@@ -11,5 +12,4 @@ const server = http.createServer((req, res) => {
   res.write("</html>");
   res.end();
 });
-
-server.listen(3000);
+```
