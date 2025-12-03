@@ -1,10 +1,10 @@
 const fs = require("fs");
-
+//
 const requestHandler = (req, res) => {
   const url = req.url;
   const method = req.method;
 
-  // routing
+  //   // routing
   if (url === "/") {
     res.write("<html>");
     res.write("<head><title>Enter Message</title></head>");
@@ -15,7 +15,7 @@ const requestHandler = (req, res) => {
     return res.end(); // end respons
   }
 
-  // Redirecting Request
+  //   // Redirecting Request
   if (url === "/message" && method === "POST") {
     // get data from form
     const body = [];
@@ -23,8 +23,8 @@ const requestHandler = (req, res) => {
       body.push(chunk);
     });
 
-    //  fired when is done parsing
-    // Add retutn in here ❗
+    //     //  fired when is done parsing
+    //     // Add retutn in here ❗
     return req.on("end", () => {
       const parsedBody = Buffer.concat(body).toString();
       const message = parsedBody.split("=")[1];
@@ -36,7 +36,7 @@ const requestHandler = (req, res) => {
     });
   }
 
-  // Sending respons from server
+  //   // Sending respons from server
   res.setHeader("Content-Type", "text/html");
   res.write("<html>");
   res.write("<head><title>My First Page</title></head>");
@@ -44,5 +44,5 @@ const requestHandler = (req, res) => {
   res.write("</html>");
   res.end(); // end the respons
 };
-
+//
 exports.handler = requestHandler;
