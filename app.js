@@ -2,6 +2,7 @@
 // 📔 Tips: Name the file according to what is imported
 const http = require("http"); // global module
 const fs = require("fs");
+const { buffer } = require("stream/consumers");
 
 // req: http.IncomingMessage,
 // res: http.ServerResponse<http.IncomingMessage>
@@ -22,7 +23,19 @@ const server = http.createServer((req, res) => {
 
   // Redirecting Request
   if (url === "/message" && method === "POST") {
-    fs.writeFileSync("message.txt", "Hello World ");
+    // get data from form
+    const body = [];
+    req.on("data", (chunk) => {
+      body.push(chunk);
+    });
+
+    //  fired when is done parsing
+    req.on("end", () => {
+      const parsedBody = Buffer.concat(body).toString();
+      const message = parsedBody.split("=")[1].replaceAll("+", " ");
+      fs.writeFileSync("message.txt", message); // store in so this method not in sync
+    });
+
     res.statusCode = 302;
     res.setHeader("Location", "/");
     return res.end();
