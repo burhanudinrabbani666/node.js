@@ -1,9 +1,8 @@
-// Create an Sever
-// 📔 Tips: Name the file according to what is imported
-const http = require("http"); // global module
+## Sending Respons
 
-// req: http.IncomingMessage,
-// res: http.ServerResponse<http.IncomingMessage>
+[MDN: HTTP Headers](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers)
+
+```js
 const server = http.createServer((req, res) => {
   // Sending respons from server
   res.setHeader("Content-Type", "text/html");
@@ -14,5 +13,4 @@ const server = http.createServer((req, res) => {
 
   res.end(); // end the respons
 });
-
-server.listen(3000);
+```
