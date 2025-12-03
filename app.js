@@ -1,11 +1,13 @@
 // Create an Sever
 // 📔 Tips: Name the file according to what is imported
 const http = require("http"); // global module
+const fs = require("fs");
 
 // req: http.IncomingMessage,
 // res: http.ServerResponse<http.IncomingMessage>
 const server = http.createServer((req, res) => {
   const url = req.url; // store url
+  const method = req.method;
 
   // routing
   if (url === "/") {
@@ -16,6 +18,14 @@ const server = http.createServer((req, res) => {
     );
     res.write("</html>");
     return res.end(); // end respons
+  }
+
+  // Redirecting Request
+  if (url === "/message" && method === "POST") {
+    fs.writeFileSync("message.txt", "Hello World ");
+    res.statusCode = 302;
+    res.setHeader("Location", "/");
+    return res.end();
   }
 
   // Sending respons from server
