@@ -2,7 +2,6 @@
 // 📔 Tips: Name the file according to what is imported
 const http = require("http"); // global module
 const fs = require("fs");
-const { buffer } = require("stream/consumers");
 
 // req: http.IncomingMessage,
 // res: http.ServerResponse<http.IncomingMessage>
@@ -30,15 +29,16 @@ const server = http.createServer((req, res) => {
     });
 
     //  fired when is done parsing
-    req.on("end", () => {
+    // Add retutn in here ❗
+    return req.on("end", () => {
       const parsedBody = Buffer.concat(body).toString();
-      const message = parsedBody.split("=")[1].replaceAll("+", " ");
-      fs.writeFileSync("message.txt", message); // store in so this method not in sync
+      const message = parsedBody.split("=")[1];
+      fs.writeFile("message.txt", message, (err) => {
+        res.statusCode = 302;
+        res.setHeader("Location", "/");
+        return res.end();
+      });
     });
-
-    res.statusCode = 302;
-    res.setHeader("Location", "/");
-    return res.end();
   }
 
   // Sending respons from server
