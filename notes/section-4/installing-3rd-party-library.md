@@ -39,3 +39,5 @@ npm install --save express-session
 // In code file (e.g. app.js)
 const sessions = require('express-session');
 ```
+
+[Next: Installing Nodeemon for auto restart](./Installing-Nodeemon-for-auto-restart.md)
